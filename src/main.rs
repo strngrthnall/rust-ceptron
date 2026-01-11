@@ -42,14 +42,14 @@ struct Neuron {
 
 
 /*
- * Escolhe um valor randômico entre dois valores
+ * Escolhe um valor aleatório entre dois valores.
  *
  * Parâmetros:
- *   min - valor minimo a ser escolhido
+ *   min - valor mínimo a ser escolhido
  *   max - valor máximo a ser escolhido
  *
- * Retorno
- *   Um valor randômico entre min e max 
+ * Retorno:
+ *   Um valor aleatório entre min e max
  */
 
 fn randomize(min: f32, max: f32) -> f32 {
@@ -96,13 +96,13 @@ fn comput_out(neuron: &Neuron, x: &Vec<f32>) -> f32 {
 }
 
 /*
- * Cria um neurônio, inicializa seu pesos e bia
+ * Cria um neurônio e inicializa seus pesos e bias.
  *
  * Parâmetros:
  *   act_func - a função de ativação do neurônio
- *   nconnections - número de conexões do neurônio
+ *   n_connections - número de conexões do neurônio
  *
- * Retorno
+ * Retorno:
  *   O neurônio criado.
  */
 
@@ -301,7 +301,7 @@ fn main() {
         vec![14.0, 18.0],
         vec![20.0, 1.0]
     ]; // Amostras de entrada
-    let out_true = vec![5.0, 41.0, 35.0, 83.0, 67.0]; // Saídas esperada de cada amostra (gabarito)
+    let out_true = vec![5.0, 41.0, 35.0, 83.0, 67.0]; // Saídas esperadas de cada amostra (gabarito)
 
     // neuron.weights[0] = 2.5;
     // neuron.bias = 6.0;

@@ -122,16 +122,16 @@ O programa treina um neurônio com **2 entradas** para aprender a função linea
 
 ```
 ***Antes do treinamento***
-O custo do neurônio : 1842.5     (valor aleatório alto)
-O valor do weight 1  : 0.42     (peso aleatório)
-O valor do weight 2  : -0.31    (peso aleatório)
-O valor do bias       : -0.78    (bias aleatório)
+O custo do neurônio : 1842.5   (valor aleatório alto)
+O valor do weight 1 : 0.42     (peso aleatório)
+O valor do weight 2 : -0.31    (peso aleatório)
+O valor do bias     : -0.78    (bias aleatório)
 
 ***Depois do treinamento***
-O custo do neurônio : ~0         (erro mínimo)
+O custo do neurônio : ~0        (erro mínimo)
 O valor do weight 1 : ~3.0      (coeficiente de x₁ aprendido)
 O valor do weight 2 : ~2.0      (coeficiente de x₂ aprendido)
-O valor do bias      : ~5.0      (termo independente aprendido)
+O valor do bias     : ~5.0      (termo independente aprendido)
 
 *** Testes ***
 Entradas 0 0 - Saída 5       (0×3 + 0×2 + 5 = 5)
