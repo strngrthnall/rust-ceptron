@@ -38,7 +38,7 @@ O perceptron implementado é capaz de aprender funções lineares com **múltipl
 4. **Cálculo do Gradiente**: Usa diferenças finitas para aproximar a derivada parcial de cada parâmetro
 5. **Atualização**: Ajusta todos os pesos e o bias na direção que reduz o erro
 
-**Exemplo atual**: O neurônio aprende a função `y = 3x₁ + 2x₂ + 5` com 2 entradas.
+**Exemplo atual**: O neurônio aprende a relação entre entradas e saídas a partir de um conjunto de dados de treinamento.
 
 > ⚠️ **Nota:** Este é um projeto de **estudo** e não deve ser utilizado em produção. O foco está no aprendizado dos conceitos fundamentais de redes neurais artificiais.
 
@@ -75,21 +75,36 @@ perceptron/
 ├── Cargo.toml          # Configuração do projeto e dependências
 ├── README.md           # Documentação do projeto
 └── src/
-    └── main.rs         # Implementação do perceptron
+    ├── main.rs         # Ponto de entrada e demonstração de treinamento
+    ├── neuron.rs       # Estrutura do neurônio e funções de inicialização
+    ├── neuralnet.rs    # Funções de treinamento e cálculo de custo
+    ├── netmath.rs      # Funções matemáticas (ativação, MSE)
+    └── utils.rs        # Utilitários (geração de números aleatórios)
 ```
+
+### Módulos
+
+| Módulo | Descrição |
+|--------|----------|
+| `main.rs` | Ponto de entrada, define dados de treinamento e executa o loop de treinamento |
+| `neuron.rs` | Define a estrutura `Neuron` e funções `init_neuron()` e `compute_out()` |
+| `neuralnet.rs` | Implementa `compute_cost()`, `compute_gradient()` e `train()` |
+| `netmath.rs` | Funções de ativação (`ident`) e custo (`mse`) |
+| `utils.rs` | Função `randomize()` para gerar valores aleatórios |
 
 ### Componentes Principais
 
-| Componente | Descrição |
-|------------|-----------|
-| `Neuron` | Estrutura que representa um neurônio com pesos, bias e função de ativação |
-| `init_neuron()` | Inicializa um neurônio com pesos e bias aleatórios |
-| `comput_out()` | Calcula a saída do neurônio dado um vetor de entrada |
-| `mse()` | Calcula o erro quadrático médio (Mean Squared Error) |
-| `comput_cost()` | Calcula o custo total do neurônio para um conjunto de amostras |
-| `comput_gradient()` | Calcula o gradiente de um parâmetro usando diferenças finitas |
-| `train()` | Treina o neurônio usando gradiente descendente |
-| `randomize()` | Gera valores aleatórios em um intervalo |
+| Componente | Módulo | Descrição |
+|------------|--------|----------|
+| `Neuron` | `neuron.rs` | Estrutura que representa um neurônio com pesos, bias e função de ativação |
+| `init_neuron()` | `neuron.rs` | Inicializa um neurônio com pesos e bias aleatórios |
+| `compute_out()` | `neuron.rs` | Calcula a saída do neurônio dado um vetor de entrada |
+| `mse()` | `netmath.rs` | Calcula o erro quadrático médio (Mean Squared Error) |
+| `ident()` | `netmath.rs` | Função de ativação identidade (f(x) = x) |
+| `compute_cost()` | `neuralnet.rs` | Calcula o custo total do neurônio para um conjunto de amostras |
+| `compute_gradient()` | `neuralnet.rs` | Calcula o gradiente de um parâmetro usando diferenças finitas |
+| `train()` | `neuralnet.rs` | Treina o neurônio usando gradiente descendente |
+| `randomize()` | `utils.rs` | Gera valores aleatórios em um intervalo |
 
 ---
 
@@ -118,31 +133,32 @@ cargo run
 
 ### Saída Esperada
 
-O programa treina um neurônio com **2 entradas** para aprender a função linear `y = 3x₁ + 2x₂ + 5`:
+O programa treina um neurônio com **2 entradas** para aprender a relação entre entradas e saídas:
 
 ```
 ***Antes do treinamento***
-O custo do neurônio : 1842.5   (valor aleatório alto)
+O custo do neurônio : 42.5     (valor varia conforme inicialização aleatória)
 O valor do weight 1 : 0.42     (peso aleatório)
 O valor do weight 2 : -0.31    (peso aleatório)
 O valor do bias     : -0.78    (bias aleatório)
 
 ***Depois do treinamento***
-O custo do neurônio : ~0        (erro mínimo)
-O valor do weight 1 : ~3.0      (coeficiente de x₁ aprendido)
-O valor do weight 2 : ~2.0      (coeficiente de x₂ aprendido)
-O valor do bias     : ~5.0      (termo independente aprendido)
+O custo do neurônio : ~0.01    (erro mínimo)
+O valor do weight 1 : ~0.5     (peso ajustado)
+O valor do weight 2 : ~0.1     (peso ajustado)
+O valor do bias     : ~0.8     (bias ajustado)
 
 *** Testes ***
-Entradas 0 0 - Saída 5       (0×3 + 0×2 + 5 = 5)
-Entradas 2 15 - Saída 41     (2×3 + 15×2 + 5 = 41)
-Entradas 8 3 - Saída 35      (8×3 + 3×2 + 5 = 35)
-Entradas 14 18 - Saída 83    (14×3 + 18×2 + 5 = 83)
-Entradas 20 1 - Saída 67     (20×3 + 1×2 + 5 = 67)
+Entrada 1 5 - Saída ~3.2
+Entrada 2 8 - Saída ~4.5
+Entrada 4 6 - Saída ~5.0
+Entrada 5 9 - Saída ~6.8
+Entrada 9 8 - Saída ~8.2
+Entrada 8 5 - Saída ~6.0
 ```
 
 > 💡 Os valores iniciais são aleatórios, mas após 50.000 iterações de treinamento,
-> o neurônio converge para os parâmetros corretos da função `y = 3x₁ + 2x₂ + 5`.
+> o neurônio converge para parâmetros que minimizam o erro entre predições e valores esperados.
 
 ---
 

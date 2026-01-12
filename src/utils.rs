@@ -1,11 +1,20 @@
+/*
+ * utils.rs
+ *
+ * Módulo de utilitários gerais.
+ *
+ * Este módulo implementa:
+ *   - Geração de números aleatórios para inicialização de pesos
+ */
+
 use rand::Rng;
 
 /*
- * Escolhe um valor aleatório entre dois valores.
+ * Gera um valor aleatório em um intervalo especificado.
  *
  * Parâmetros:
- *   min - valor mínimo a ser escolhido
- *   max - valor máximo a ser escolhido
+ *   min - limite inferior do intervalo (inclusivo)
+ *   max - limite superior do intervalo (exclusivo)
  *
  * Retorno:
  *   Um valor aleatório entre min e max

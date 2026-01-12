@@ -1,3 +1,14 @@
+/*
+ * neuron.rs
+ *
+ * Módulo que define a estrutura e operações básicas do neurônio.
+ *
+ * Este módulo implementa:
+ *   - Estrutura Neuron (perceptron)
+ *   - Inicialização de neurônios com pesos aleatórios
+ *   - Computação da saída do neurônio (forward pass)
+ */
+
 use crate::utils::randomize;
 
 /*

@@ -1,21 +1,21 @@
 /*
- * perceptron.rs
+ * main.rs
  *
- * Implementação de um perceptron,
+ * Ponto de entrada da aplicação Perceptron.
+ * 
+ * Este projeto implementa um perceptron do zero,
  * sem uso de bibliotecas externas de Machine Learning.
  *
- * Este arquivo contém:
- * - Definição da estrutura do neurônio (Perceptron)
- * - Função de ativação identidade
- * - Computação de saída do neurônio
- * - Função de custo MSE (Mean Squared Error)
- * - Cálculo de gradiente por diferenças finitas
- * - Treinamento por gradiente descendente
+ * O projeto está organizado nos seguintes módulos:
+ *   - neuron: estrutura do neurônio e funções de inicialização/computação
+ *   - neuralnet: funções de treinamento e cálculo de custo
+ *   - netmath: funções matemáticas (ativação, MSE)
+ *   - utils: utilitários (geração de números aleatórios)
  *
- * O neurônio aprende a relação linear y = 3x₁ + 2x₂ + 5
- * a partir de exemplos de entrada/saída (2 entradas, 1 saída).
+ * O neurônio aprende relações lineares a partir de exemplos
+ * de entrada/saída usando gradiente descendente.
  *
- * Objetivo educacional: mostrar como tudo funciona "por baixo".
+ * Objetivo educacional: mostrar como tudo funciona "por baixo do capô".
  */
 
 mod neuron;
@@ -31,45 +31,51 @@ use crate::netmath::*;
  * Função principal - ponto de entrada do programa.
  *
  * Demonstra o treinamento de um perceptron para aprender
- * a função linear y = 3x₁ + 2x₂ + 5 (2 entradas, 1 saída).
+ * uma relação linear entre entradas e saídas (2 entradas, 1 saída).
  *
  * Fluxo de execução:
  *   1. Cria um neurônio com 2 conexões e pesos aleatórios
- *   2. Define dados de treinamento (x₁, x₂, y) da função y = 3x₁ + 2x₂ + 5
+ *   2. Define dados de treinamento (amostras de entrada x e saídas esperadas)
  *   3. Exibe o custo inicial (antes do treinamento)
- *   4. Treina o neurônio por 50.000 iterações
- *   5. Exibe o custo final e os parâmetros aprendidos
- *   6. Exibe os dados de teste para verificação
+ *   4. Treina o neurônio por 50.000 iterações usando gradiente descendente
+ *   5. Exibe o custo final e os parâmetros aprendidos (pesos e bias)
+ *   6. Exibe os resultados de teste para verificação
  *
  * Resultado esperado após treinamento:
- *   - weight₁ ≈ 3.0 (coeficiente de x₁)
- *   - weight₂ ≈ 2.0 (coeficiente de x₂)
- *   - bias ≈ 5.0 (termo independente)
- *   - custo ≈ 0 (erro mínimo)
+ *   - Pesos ajustados para aproximar a relação entre entradas e saídas
+ *   - Custo próximo de zero (erro mínimo)
  */
 fn main() {
-    const SAMPLE_SIZE: usize = 5;
+    const SAMPLE_SIZE: usize = 6;
+    const CONNECTIONS: u32 = 2;
 
-    let mut neuron = init_neuron(ident, 2);
+    let mut neuron = init_neuron(ident, CONNECTIONS);
 
+    // Dados de treinamento: amostras de entrada (x₁, x₂)
     let x = vec![
-        vec![0.0, 0.0], 
-        vec![2.0, 15.0], 
-        vec![8.0, 3.0], 
-        vec![14.0, 18.0],
-        vec![20.0, 1.0]
-    ]; // Amostras de entrada
-    let out_true = vec![5.0, 41.0, 35.0, 83.0, 67.0]; // Saídas esperadas de cada amostra (gabarito)
+        vec![1.0, 5.0], vec![2.0, 8.0], 
+        vec![4.0, 6.0], vec![5.0, 9.0],
+        vec![9.0, 8.0], vec![8.0, 5.0]
+    ];
+
+    // Saídas esperadas (gabarito) correspondentes a cada amostra
+    let out_true = vec![
+        3.2, 4.5, 
+        5.0, 6.8, 
+        8.2, 6.0
+    ];
 
     // neuron.weights[0] = 2.5;
     // neuron.bias = 6.0;
 
     let mut cost = compute_cost(&neuron, &x, out_true.clone(), mse, SAMPLE_SIZE);
+    
 
     println!("***Antes do treinamento***");
     println!("O custo do neurônio : {}", cost);
-    println!("O valor do weight 1 : {}", neuron.weights[0]);
-    println!("O valor do weight 2 : {}", neuron.weights[1]);
+    for i in 0..CONNECTIONS as usize {
+        println!("O valor do weight {} : {}", i+1, neuron.weights[i]);
+    }
     println!("O valor do bias     : {}", neuron.bias);
 
     for _i in 0..50000 {
@@ -80,14 +86,15 @@ fn main() {
 
     println!("***Depois do treinamento***");
     println!("O custo do neurônio : {}", cost);
-    println!("O valor do weight 1 : {}", neuron.weights[0]);
-    println!("O valor do weight 2 : {}", neuron.weights[1]);
+    for i in 0..CONNECTIONS as usize {
+        println!("O valor do weight {} : {}", i+1, neuron.weights[i]);
+    }
     println!("O valor do bias     : {}", neuron.bias);
 
 
     println!("*** Testes ***");
     for i in 0..SAMPLE_SIZE {
-        println!("Entradas {} {} - Saída {}", x[i][0], x[i][1], out_true[i]);
+        println!("Entrada {} {} - Saída {}", x[i][0], x[i][1], compute_out(&neuron, &x[i]));
     }
     
 }

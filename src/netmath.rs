@@ -1,3 +1,13 @@
+/*
+ * netmath.rs
+ *
+ * Módulo de funções matemáticas para a rede neural.
+ *
+ * Este módulo implementa:
+ *   - Funções de ativação (identidade)
+ *   - Funções de custo (MSE - Mean Squared Error)
+ */
+
 use num::pow;
 
 /*

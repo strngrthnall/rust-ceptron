@@ -1,3 +1,14 @@
+/*
+ * neuralnet.rs
+ *
+ * Módulo de rede neural contendo funções de treinamento.
+ *
+ * Este módulo implementa:
+ *   - Cálculo de custo total do neurônio
+ *   - Cálculo de gradientes por diferenças finitas
+ *   - Algoritmo de treinamento por gradiente descendente
+ */
+
 use crate::neuron::*;
 
 /*
