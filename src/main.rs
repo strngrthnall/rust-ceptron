@@ -49,26 +49,26 @@ fn main() {
     const SAMPLE_SIZE: usize = 6;
     const CONNECTIONS: u32 = 2;
 
-    let mut neuron = init_neuron(ident, CONNECTIONS);
+    let mut neuron = init_neuron(sigmoid, CONNECTIONS);
 
     // Dados de treinamento: amostras de entrada (x₁, x₂)
     let x = vec![
-        vec![1.0, 5.0], vec![2.0, 8.0], 
-        vec![4.0, 6.0], vec![5.0, 9.0],
-        vec![9.0, 8.0], vec![8.0, 5.0]
+        vec![6.0, 1.0], vec![5.0, 0.0], 
+        vec![4.0, 1.0], vec![1.0, 4.0],
+        vec![1.0, 2.0], vec![2.0, 3.0]
     ];
 
     // Saídas esperadas (gabarito) correspondentes a cada amostra
     let out_true = vec![
-        3.2, 4.5, 
-        5.0, 6.8, 
-        8.2, 6.0
+        1.0, 1.0, 
+        1.0, 0.0, 
+        0.0, 0.0
     ];
 
     // neuron.weights[0] = 2.5;
     // neuron.bias = 6.0;
 
-    let mut cost = compute_cost(&neuron, &x, out_true.clone(), mse, SAMPLE_SIZE);
+    let mut cost = compute_cost(&neuron, &x, &out_true, mse, SAMPLE_SIZE);
     
 
     println!("***Antes do treinamento***");
@@ -82,7 +82,7 @@ fn main() {
         train(&mut neuron, mse, &x, &out_true, SAMPLE_SIZE);
     }
 
-    cost = compute_cost(&neuron, &x, out_true.clone(), mse, SAMPLE_SIZE);
+    cost = compute_cost(&neuron, &x, &out_true, mse, SAMPLE_SIZE);
 
     println!("***Depois do treinamento***");
     println!("O custo do neurônio : {}", cost);

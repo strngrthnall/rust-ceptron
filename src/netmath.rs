@@ -4,7 +4,7 @@
  * Módulo de funções matemáticas para a rede neural.
  *
  * Este módulo implementa:
- *   - Funções de ativação (identidade)
+ *   - Funções de ativação (identidade, sigmoid)
  *   - Funções de custo (MSE - Mean Squared Error)
  */
 
@@ -23,8 +23,33 @@ use num::pow;
  * Retorno:
  *   O próprio valor x (f(x) = x)
  */
+#[allow(dead_code)]
 pub fn ident(x: f32) -> f32 {
     x
+}
+
+/*
+ * Função de ativação Sigmoid (Logística).
+ *
+ * Comprime qualquer valor de entrada para o intervalo (0, 1).
+ * Muito utilizada em problemas de classificação binária.
+ *
+ * Fórmula: σ(x) = 1 / (1 + e^(-x))
+ *
+ * Propriedades:
+ *   - Saída sempre entre 0 e 1
+ *   - σ(0) = 0.5
+ *   - Derivada: σ'(x) = σ(x) * (1 - σ(x))
+ *
+ * Parâmetros:
+ *   x - valor de entrada (soma ponderada + bias)
+ *
+ * Retorno:
+ *   Valor entre 0 e 1 representando a probabilidade de ativação
+ */
+#[allow(dead_code)]
+pub fn sigmoid(x: f32) -> f32 {
+    1.0 / (1.0 + (-x).exp())
 }
 
 /*
@@ -40,8 +65,8 @@ pub fn ident(x: f32) -> f32 {
  */
 
 pub fn mse(
-    out_true: Vec<f32>, 
-    out_pred: Vec<f32>, 
+    out_true: &[f32], 
+    out_pred: &[f32], 
     sample_size: usize
 ) -> f32 {
     let mut sum_squared_errors = 0.0;

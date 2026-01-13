@@ -1,10 +1,11 @@
+<h1 align="center">🧠 Perceptron em Rust</h1>
+
 <p align="center">
   <img src="https://img.shields.io/badge/Rust-000000?style=for-the-badge&logo=rust&logoColor=white" alt="Rust">
   <img src="https://img.shields.io/badge/Machine%20Learning-FF6F00?style=for-the-badge&logo=tensorflow&logoColor=white" alt="Machine Learning">
   <img src="https://img.shields.io/badge/Status-Em%20Desenvolvimento-yellow?style=for-the-badge" alt="Status">
 </p>
 
-<h1 align="center">🧠 Perceptron em Rust</h1>
 
 <p align="center">
   <strong>Implementação de um Perceptron do zero, sem frameworks de Machine Learning</strong>
@@ -58,12 +59,12 @@ O perceptron implementado é capaz de aprender funções lineares com **múltipl
 - [x] Estrutura básica do Neurônio (Perceptron)
 - [x] Suporte a múltiplas entradas (n conexões)
 - [x] Inicialização de pesos e bias aleatórios
-- [x] Função de ativação (Identidade)
+- [x] Funções de ativação (Identidade, Sigmoid)
 - [x] Computação de saída do neurônio
 - [x] Função de custo MSE (Mean Squared Error)
 - [x] Cálculo de gradiente por diferenças finitas
 - [x] Algoritmo de treinamento (Gradiente Descendente)
-- [ ] Múltiplas funções de ativação (Sigmoid, ReLU, Tanh)
+- [ ] Mais funções de ativação (ReLU, Tanh)
 - [ ] Múltiplas camadas (MLP - Multi-Layer Perceptron)
 
 ---
@@ -89,7 +90,7 @@ perceptron/
 | `main.rs` | Ponto de entrada, define dados de treinamento e executa o loop de treinamento |
 | `neuron.rs` | Define a estrutura `Neuron` e funções `init_neuron()` e `compute_out()` |
 | `neuralnet.rs` | Implementa `compute_cost()`, `compute_gradient()` e `train()` |
-| `netmath.rs` | Funções de ativação (`ident`) e custo (`mse`) |
+| `netmath.rs` | Funções de ativação (`ident`, `sigmoid`) e custo (`mse`) |
 | `utils.rs` | Função `randomize()` para gerar valores aleatórios |
 
 ### Componentes Principais
@@ -101,6 +102,7 @@ perceptron/
 | `compute_out()` | `neuron.rs` | Calcula a saída do neurônio dado um vetor de entrada |
 | `mse()` | `netmath.rs` | Calcula o erro quadrático médio (Mean Squared Error) |
 | `ident()` | `netmath.rs` | Função de ativação identidade (f(x) = x) |
+| `sigmoid()` | `netmath.rs` | Função de ativação sigmoid (σ(x) = 1/(1 + e⁻ˣ)) |
 | `compute_cost()` | `neuralnet.rs` | Calcula o custo total do neurônio para um conjunto de amostras |
 | `compute_gradient()` | `neuralnet.rs` | Calcula o gradiente de um parâmetro usando diferenças finitas |
 | `train()` | `neuralnet.rs` | Treina o neurônio usando gradiente descendente |
@@ -166,7 +168,9 @@ Entrada 8 5 - Saída ~6.0
 
 - 🎥 **Canal Do Zero** - [YouTube](https://www.youtube.com/@dozero)
   - Série de vídeos sobre implementação de redes neurais em C
-- 📖 **Documentação Rust** - [rust-lang.org](https://doc.rust-lang.org/book/)
+- � **Repositório Original (C)** - [GitHub](https://github.com/acsfranco/dozero)
+  - Implementação original em C do canal Do Zero
+- �📖 **Documentação Rust** - [rust-lang.org](https://doc.rust-lang.org/book/)
 - 🧠 **Perceptron** - [Wikipedia](https://en.wikipedia.org/wiki/Perceptron)
 
 ---

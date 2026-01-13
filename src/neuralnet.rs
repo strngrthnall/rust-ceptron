@@ -28,8 +28,8 @@ use crate::neuron::*;
 pub fn compute_cost(
     neuron: &Neuron, 
     x: &Vec<Vec<f32>>, 
-    y: Vec<f32>, 
-    cost: fn(Vec<f32>, Vec<f32>, usize) -> f32, 
+    y: &[f32], 
+    cost: fn(&[f32], &[f32], usize) -> f32, 
     sample_size: usize
 ) -> f32 {
     let mut out_pred: Vec<f32> = Vec::new();
@@ -37,7 +37,7 @@ pub fn compute_cost(
     for i in 0..sample_size {
         out_pred.push(compute_out(&neuron, &x[i]));
     }
-    cost(y, out_pred, sample_size)
+    cost(y, &out_pred, sample_size)
 }
 
 /*
@@ -71,9 +71,9 @@ enum ParamType {
  */
 fn compute_gradient(
     neuron: &mut Neuron, 
-    cost: fn(Vec<f32>, Vec<f32>, usize) -> f32,
+    cost: fn(&[f32], &[f32], usize) -> f32,
     x: &Vec<Vec<f32>>,
-    y: &Vec<f32>,
+    y: &[f32],
     param: ParamType,
     sample_size: usize
 ) -> f32 {
@@ -84,14 +84,14 @@ fn compute_gradient(
         ParamType::Weight(i) => neuron.weights[i] += eps,
         ParamType::Bias => neuron.bias += eps,
     }
-    let variation_cost = compute_cost(neuron, x, y.clone(), cost, sample_size);
+    let variation_cost = compute_cost(neuron, x, y, cost, sample_size);
     
     // Restaura o parâmetro
     match param {
         ParamType::Weight(i) => neuron.weights[i] -= eps,
         ParamType::Bias => neuron.bias -= eps,
     }
-    let normal_cost = compute_cost(neuron, x, y.clone(), cost, sample_size);
+    let normal_cost = compute_cost(neuron, x, y, cost, sample_size);
 
     (variation_cost - normal_cost) / eps
 }
@@ -115,9 +115,9 @@ fn compute_gradient(
 
 pub fn train(
     neuron: &mut Neuron, 
-    cost: fn(Vec<f32>, Vec<f32>, usize) -> f32, 
+    cost: fn(&[f32], &[f32], usize) -> f32, 
     x: &Vec<Vec<f32>>, 
-    y: &Vec<f32>, 
+    y: &[f32], 
     sample_size: usize
 ) {
     let mut gradient;
