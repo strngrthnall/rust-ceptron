@@ -49,7 +49,7 @@ fn main() {
     const SAMPLE_SIZE: usize = 6;
     const CONNECTIONS: u32 = 2;
 
-    let mut neuron = Neuron::new(sigmoid, CONNECTIONS);
+    let mut neuron = Neuron::new(sigmoid, CONNECTIONS, vec![]);
 
     // Dados de treinamento: amostras de entrada (x₁, x₂)
     let x = vec![

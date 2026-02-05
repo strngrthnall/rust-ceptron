@@ -47,10 +47,11 @@ pub fn ident(x: f32) -> f32 {
  * Retorno:
  *   Valor entre 0 e 1 representando a probabilidade de ativação
  */
-#[allow(dead_code)]
+
 pub fn sigmoid(x: f32) -> f32 {
     1.0 / (1.0 + (-x).exp())
 }
+
 
 /*
  * Calcula o Erro Quadrático Médio (Mean Squared Error).
@@ -75,4 +76,30 @@ pub fn mse(
         sum_squared_errors += pow(out_pred[i] - out_true[i], 2);
     }
     sum_squared_errors / sample_size as f32
+}
+
+
+/*
+ * Função de ativação ReLU (Rectified Linear Unit).
+ *
+ * Retorna x se x > 0, caso contrário retorna 0.
+ * Muito utilizada em redes neurais profundas.
+ *
+ * Parâmetros:
+ *   x - valor de entrada (soma ponderada + bias)
+ *
+ * Retorno:
+ *   Valor de ativação (x ou 0)
+ */
+
+
+#[allow(dead_code)]
+pub fn relu(
+    x: f32
+) -> f32 {
+    if x > 0.0 {
+        return x
+    } else {
+        0.0
+    }
 }

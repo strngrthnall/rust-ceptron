@@ -9,6 +9,7 @@
  *   - Algoritmo de treinamento por gradiente descendente
  */
 
+
 use crate::neuron::*;
 
 /*
@@ -132,4 +133,79 @@ pub fn train(
     gradient = compute_gradient(neuron, cost, x, y, param, sample_size);
     neuron.bias -= 0.001 * gradient;
 
+}
+
+
+
+/*
+ * Estrutura Net
+ *
+ * Representa uma rede neural multicamada (MLP), contendo:
+ *   - Vetor de neurônios de saída
+ *   - Número de neurônios de saída
+ *   - Função de ativação interna
+ *   - Função de ativação de saída
+ */
+#[derive(Clone)]
+struct Net {
+    out_neurons: Vec<Neuron>,
+    n_out: u16,
+    int_act_func: fn(f32) -> f32,
+    out_act_func: fn(f32) -> f32,
+}
+
+impl Net {
+
+    /*
+     * Construtor da estrutura Net
+     *
+     * Inicializa uma rede neural multicamada (MLP) com o número de camadas e neurônios
+     * especificados em `layers`, além das funções de ativação internas e de saída.
+     *
+     * Parâmetros:
+     *   layers - vetor contendo o número de neurônios por camada
+     *   int_act_func - função de ativação para camadas internas
+     *   out_act_func - função de ativação para camada de saída
+     *
+     * Retorno:
+     *   Instância da estrutura Net
+     */
+    pub fn new(
+        layers: Vec<u16>, 
+        int_act_func: fn(f32) -> f32,
+        out_act_func: fn(f32) -> f32,
+    ) -> Self {
+    
+        let n_layers = layers.len();
+
+        let mut prev_layer: Vec<Neuron> = Vec::new();
+        let n_out = layers[n_layers - 1];
+
+        for i in 1..n_layers {
+            let n_connections = layers[i - 1];
+            let n_neurons = layers[i];
+            
+            let mut curr_layer: Vec<Neuron> = Vec::new();
+
+            for _j in 0..n_neurons {
+                let neuron = Neuron::new(
+                    if i < n_layers - 1 { int_act_func } else { out_act_func }, 
+                    n_connections as u32,
+                    prev_layer.clone()
+                );
+
+                curr_layer.push(neuron);
+            }
+
+            prev_layer = curr_layer;
+        }
+
+        Net {
+            out_neurons: prev_layer,
+            n_out,
+            int_act_func,
+            out_act_func,
+        }
+
+    }
 }

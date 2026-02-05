@@ -54,18 +54,19 @@ O perceptron implementado é capaz de aprender funções lineares com **múltipl
 
 ---
 
+
 ## ✨ Funcionalidades
 
 - [x] Estrutura básica do Neurônio (Perceptron)
 - [x] Suporte a múltiplas entradas (n conexões)
 - [x] Inicialização de pesos e bias aleatórios
-- [x] Funções de ativação (Identidade, Sigmoid)
+- [x] Funções de ativação (Identidade, Sigmoid, ReLU)
 - [x] Computação de saída do neurônio
 - [x] Função de custo MSE (Mean Squared Error)
 - [x] Cálculo de gradiente por diferenças finitas
 - [x] Algoritmo de treinamento (Gradiente Descendente)
-- [ ] Mais funções de ativação (ReLU, Tanh)
-- [ ] Múltiplas camadas (MLP - Multi-Layer Perceptron)
+- [x] Suporte a múltiplas camadas (MLP - Multi-Layer Perceptron) via campo `con_neurons`
+- [ ] Mais funções de ativação (Tanh)
 
 ---
 
@@ -90,22 +91,25 @@ perceptron/
 | `main.rs` | Ponto de entrada, define dados de treinamento e executa o loop de treinamento |
 | `neuron.rs` | Define a estrutura `Neuron` e funções `init_neuron()` e `compute_out()` |
 | `neuralnet.rs` | Implementa `compute_cost()`, `compute_gradient()` e `train()` |
-| `netmath.rs` | Funções de ativação (`ident`, `sigmoid`) e custo (`mse`) |
+| `netmath.rs` | Funções de ativação (`ident`, `sigmoid`, `relu`) e custo (`mse`) |
 | `utils.rs` | Função `randomize()` para gerar valores aleatórios |
 
 ### Componentes Principais
 
 | Componente | Módulo | Descrição |
 |------------|--------|----------|
-| `Neuron` | `neuron.rs` | Estrutura que representa um neurônio com pesos, bias e função de ativação |
+| `Neuron` | `neuron.rs` | Estrutura que representa um neurônio com pesos, bias, função de ativação e conexões para múltiplas camadas |
 | `init_neuron()` | `neuron.rs` | Inicializa um neurônio com pesos e bias aleatórios |
-| `compute_out()` | `neuron.rs` | Calcula a saída do neurônio dado um vetor de entrada |
+| `compute_out()` | `neuron.rs` | Calcula a saída do neurônio dado um vetor de entrada ou saída de outros neurônios |
 | `mse()` | `netmath.rs` | Calcula o erro quadrático médio (Mean Squared Error) |
 | `ident()` | `netmath.rs` | Função de ativação identidade (f(x) = x) |
 | `sigmoid()` | `netmath.rs` | Função de ativação sigmoid (σ(x) = 1/(1 + e⁻ˣ)) |
+| `relu()` | `netmath.rs` | Função de ativação ReLU (Rectified Linear Unit) |
 | `compute_cost()` | `neuralnet.rs` | Calcula o custo total do neurônio para um conjunto de amostras |
 | `compute_gradient()` | `neuralnet.rs` | Calcula o gradiente de um parâmetro usando diferenças finitas |
 | `train()` | `neuralnet.rs` | Treina o neurônio usando gradiente descendente |
+| `Net` | `neuralnet.rs` | Estrutura que representa uma rede neural multicamada (MLP), contendo neurônios de saída, funções de ativação e método construtor |
+| `Net::new()` | `neuralnet.rs` | Construtor que inicializa uma rede neural com múltiplas camadas e funções de ativação personalizadas |
 | `randomize()` | `utils.rs` | Gera valores aleatórios em um intervalo |
 
 ---
@@ -203,10 +207,17 @@ Contribuições são bem-vindas! Este é um projeto de estudo, então sinta-se �
 
 ---
 
+---
+
+## ℹ️ Observação sobre uso de IA
+
+Os comentários do código e este README foram gerados ou revisados com auxílio de Inteligência Artificial (IA), sem alteração da lógica ou implementação do código-fonte.
+
+---
+
 <p align="center">
   Feito com ❤️ para fins educacionais
 </p>
-
 <p align="center">
   <sub>Inspirado nas aulas do canal <a href="https://www.youtube.com/@dozero">Do Zero</a></sub>
 </p>
